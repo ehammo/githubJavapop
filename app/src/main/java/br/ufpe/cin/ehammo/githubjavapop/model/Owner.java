@@ -9,6 +9,9 @@ public class Owner {
     @SerializedName("login")
     @Expose
     private String login;
+    @SerializedName("name")
+    @Expose
+    private String name;
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -40,4 +43,13 @@ public class Owner {
         this.avatarUrl = avatarUrl;
     }
 
+    public String getName() {
+        if (name == null || name.length() == 0)
+            return login;
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

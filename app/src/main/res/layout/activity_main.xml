@@ -12,10 +12,18 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"></android.support.v7.widget.RecyclerView>
 
-    <ProgressBar
+    <RelativeLayout
         android:id="@+id/progress"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="15dp" />
+    </RelativeLayout>
 
 </RelativeLayout>
