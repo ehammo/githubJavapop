@@ -15,13 +15,13 @@ import java.util.List;
 import br.ufpe.cin.ehammo.githubjavapop.R;
 import br.ufpe.cin.ehammo.githubjavapop.controller.Facade;
 import br.ufpe.cin.ehammo.githubjavapop.model.APIResponse;
-import br.ufpe.cin.ehammo.githubjavapop.model.Owner;
 import br.ufpe.cin.ehammo.githubjavapop.model.Repository;
 import br.ufpe.cin.ehammo.githubjavapop.views.EndlessRecyclerViewScrollListener;
 import br.ufpe.cin.ehammo.githubjavapop.views.adapters.RepositoryAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class RepositoryActivity extends AppCompatActivity {
 
@@ -33,9 +33,6 @@ public class RepositoryActivity extends AppCompatActivity {
 
     private ArrayList<Repository> repositories;
     private RepositoryAdapter repositoryAdapter;
-    private Callback<Owner> callback;
-    //    private boolean isLoading = true;
-//    public static boolean isLastPage = false;
     private int currentPage = 1;
 
     @Override

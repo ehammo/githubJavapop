@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/externalLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/square_shadow"
     android:orientation="horizontal">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,7 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:layout_toLeftOf="@id/userinfo">
 
         <TextView
@@ -27,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvName"
+            android:layout_marginBottom="18dp"
             android:text="descrição do repositorio descrição do repositorio descrição do repositorio descrição do repositorio descrição do repositorio descrição do repositorio " />
 
         <TextView
@@ -60,15 +66,17 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivAvatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_avatar" />
+            android:src="@drawable/ic_avatar"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="1dp" />
 
         <TextView
             android:id="@+id/tvUsername"

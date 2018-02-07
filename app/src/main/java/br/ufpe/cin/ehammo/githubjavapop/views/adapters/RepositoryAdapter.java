@@ -2,19 +2,26 @@ package br.ufpe.cin.ehammo.githubjavapop.views.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
 
 import br.ufpe.cin.ehammo.githubjavapop.R;
 import br.ufpe.cin.ehammo.githubjavapop.model.Repository;
 import br.ufpe.cin.ehammo.githubjavapop.views.activities.PullRequestActivity;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by eduardo on 07/02/2018.
@@ -34,7 +41,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final Repository repository = repositories.get(i);
-        viewHolder.setInfo(repository);
+        viewHolder.setInfo(repository, activity);
         viewHolder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +80,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
         TextView desc;
         TextView forks;
         TextView stars;
-        ImageView avatar;
+        CircleImageView avatar;
         TextView username;
         TextView fullusername;
         RelativeLayout layout;
@@ -90,14 +97,24 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
             fullusername = itemView.findViewById(R.id.tvFullUserName);
         }
 
-        public void setInfo(Repository repository) {
+        public void setInfo(Repository repository, final Activity activity) {
             name.setText(repository.getName());
             desc.setText(repository.getDescription());
             forks.setText(repository.getForksCount().toString());
             stars.setText(repository.getStargazersCount().toString());
             username.setText(repository.getOwner().getLogin());
             fullusername.setText(repository.getOwner().getName());
-//            avatar
+
+            Glide.with(activity).load(repository.getOwner().getAvatarUrl()).asBitmap()
+                    .into(new SimpleTarget<Bitmap>(320, 240) {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            Drawable drawable = new BitmapDrawable(activity.getResources(), resource);
+                            avatar.setImageDrawable(drawable);
+                        }
+                    });
+
+
         }
     }
 
