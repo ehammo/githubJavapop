@@ -1,6 +1,7 @@
 package br.ufpe.cin.ehammo.githubjavapop.views.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,11 @@ import br.ufpe.cin.ehammo.githubjavapop.R;
 import br.ufpe.cin.ehammo.githubjavapop.model.Repository;
 
 /**
- * Created by eduardo on 06/02/2018.
+ * Created by eduardo on 07/02/2018.
  */
 
 public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.ViewHolder> {
+
 
     private ArrayList<Repository> repositories;
 
@@ -24,9 +26,9 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, int i) {
-        Repository repository = repositories.get(i);
-        viewHolder.name.setText(repository.getName());
+    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+        Log.d("oi", repositories.get(i).getName());
+        viewHolder.name.setText(repositories.get(i).getName() + " " + i);
     }
 
     @Override
@@ -44,8 +46,9 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
     public int getItemCount() {
         if (repositories != null) {
             return repositories.size();
+        } else {
+            return 0;
         }
-        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,4 +60,5 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
             name = itemView.findViewById(R.id.tvName);
         }
     }
+
 }

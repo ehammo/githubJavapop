@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.ufpe.cin.ehammo.githubjavapop.R;
 import br.ufpe.cin.ehammo.githubjavapop.controller.Facade;
@@ -31,7 +33,8 @@ public class RepositoryActivity extends AppCompatActivity {
     private ArrayList<Repository> repositories;
     private RepositoryAdapter repositoryAdapter;
 
-
+    //    private boolean isLoading = true;
+//    public static boolean isLastPage = false;
     private int currentPage = 1;
 
     @Override
@@ -62,22 +65,33 @@ public class RepositoryActivity extends AppCompatActivity {
         };
 
         recyclerView.addOnScrollListener(scrollListener);
-        loadNextPage();
+        loadFirstPage();
     }
 
-    private void loadNextPage() {
-        Log.d(TAG, "loadPage: " + currentPage);
-
+    private void loadFirstPage() {
+//        isLoading = true;
+        progressBar.setVisibility(View.VISIBLE);
         Facade.getInstance().getRepositories(currentPage, new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                Log.d(TAG, "onresponse");
+//                isLoading = false;
+                progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
                     APIResponse apiResponse = response.body();
-                    int pageSize = apiResponse.getItems().size();
-                    repositories.addAll(apiResponse.getItems());
-                    Log.d(TAG, "repSize: " + repositoryAdapter.getItemCount());
-                    repositoryAdapter.notifyDataSetChanged();
+                    if (apiResponse != null) {
+                        List<Repository> repositoryList = apiResponse.getItems();
+                        Log.d(TAG, repositoryList.size() + " itens");
+                        if (repositoryList != null) {
+                            repositories.addAll(repositoryList);
+//                            if (repositoryList.size() >= 5) {
+//                                repositoryAdapter.addFooter();
+//                            } else {
+//                                isLastPage = true;
+//                            }
+                            repositoryAdapter.notifyDataSetChanged();
+                        }
+                    }
+
 
                 } else {
                     Log.e(TAG, "response not successful");
@@ -90,6 +104,51 @@ public class RepositoryActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 Log.e(TAG, "fail");
+                if (!call.isCanceled()) {
+//                    isLoading = false;
+                    progressBar.setVisibility(View.GONE);
+                }
+                if (t != null) {
+                    Log.e(TAG, t.getMessage());
+                }
+            }
+        });
+    }
+
+    private void loadNextPage() {
+        Log.d(TAG, "loadPage: " + currentPage);
+
+        Facade.getInstance().getRepositories(currentPage, new Callback<APIResponse>() {
+            @Override
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                Log.d(TAG, "onresponse");
+                if (response.isSuccessful()) {
+                    APIResponse apiResponse = response.body();
+                    if (apiResponse != null) {
+                        List<Repository> repositoryList = apiResponse.getItems();
+                        if (repositoryList != null) {
+                            repositories.addAll(apiResponse.getItems());
+//                            if(repositoryList.size() >= 5){
+//                                repositoryAdapter.addFooter();
+//                            } else {
+//                                isLastPage = true;
+//                            }
+                            repositoryAdapter.notifyDataSetChanged();
+                        }
+                    }
+                } else {
+                    if (response.code() == 400) {
+//                        isLastPage = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse> call, Throwable t) {
+                Log.e(TAG, "fail");
+                if (!call.isCanceled()) {
+//                    repositoryAdapter.updateFooter(repositoryAdapter.FooterType.ERROR);
+                }
                 if (t != null) {
                     Log.e(TAG, t.getMessage());
                 }
