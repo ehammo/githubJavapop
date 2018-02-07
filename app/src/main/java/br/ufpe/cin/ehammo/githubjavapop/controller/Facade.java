@@ -2,8 +2,11 @@ package br.ufpe.cin.ehammo.githubjavapop.controller;
 
 import android.util.Log;
 
+import java.util.List;
+
 import br.ufpe.cin.ehammo.githubjavapop.model.APIResponse;
 import br.ufpe.cin.ehammo.githubjavapop.model.Owner;
+import br.ufpe.cin.ehammo.githubjavapop.model.PullRequest;
 import retrofit2.Callback;
 
 /**
@@ -39,6 +42,10 @@ public class Facade {
     public void getUser(String login, Callback<Owner> callback) {
         Log.d("Facade", userController.getUserService().getUser(login).request().url().toString());
         userController.getUserService().getUser(login).enqueue(callback);
+    }
+
+    public void getPullRequests(String login, String repository, Callback<List<PullRequest>> callback) {
+        pullRequestController.getPullRequestService().getPullRequests(login, repository).enqueue(callback);
     }
 
 }

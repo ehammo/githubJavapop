@@ -51,7 +51,7 @@ public class RepositoryActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        repositoryAdapter = new RepositoryAdapter(repositories);
+        repositoryAdapter = new RepositoryAdapter(repositories, this);
 
         recyclerView.setAdapter(repositoryAdapter);
 
