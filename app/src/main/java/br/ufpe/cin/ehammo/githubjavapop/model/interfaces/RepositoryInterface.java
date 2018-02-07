@@ -1,8 +1,6 @@
 package br.ufpe.cin.ehammo.githubjavapop.model.interfaces;
 
-import java.util.List;
-
-import br.ufpe.cin.ehammo.githubjavapop.model.Repository;
+import br.ufpe.cin.ehammo.githubjavapop.model.APIResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -13,8 +11,8 @@ import retrofit2.http.Query;
 
 public interface RepositoryInterface {
 
-    @GET("search/repositories/")
-    Call<List<Repository>> getRepositories(
+    @GET("search/repositories")
+    Call<APIResponse> getRepositories(
             @Query("q") String language,
             @Query("sort") String sort,
             @Query("page") int page

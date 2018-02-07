@@ -1,8 +1,8 @@
 package br.ufpe.cin.ehammo.githubjavapop.controller;
 
-import java.util.List;
+import android.util.Log;
 
-import br.ufpe.cin.ehammo.githubjavapop.model.Repository;
+import br.ufpe.cin.ehammo.githubjavapop.model.APIResponse;
 import retrofit2.Callback;
 
 /**
@@ -28,7 +28,8 @@ public class Facade {
     }
 
 
-    private void getRepositories(int page, Callback<List<Repository>> callBack) {
+    public void getRepositories(int page, Callback<APIResponse> callBack) {
+        Log.d("Facade", repositoryController.getRepositoryService().getRepositories("language:Java", "stars", page).request().url().toString());
         repositoryController.getRepositoryService().getRepositories("language:Java", "stars", page).enqueue(callBack);
     }
 
