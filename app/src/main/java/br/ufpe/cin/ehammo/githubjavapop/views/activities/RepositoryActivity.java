@@ -53,6 +53,7 @@ public class RepositoryActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(repositoryAdapter);
         recyclerView.setVisibility(View.VISIBLE);
+
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
 
             @Override
@@ -64,7 +65,19 @@ public class RepositoryActivity extends AppCompatActivity {
         };
 
         recyclerView.addOnScrollListener(scrollListener);
-        loadPage();
+
+        if (savedInstanceState != null) {
+            Log.d("save", "oi");
+            ArrayList<Repository> savedrepositories = (ArrayList<Repository>) savedInstanceState.getSerializable("repositories");
+            currentPage = savedInstanceState.getInt("currentPage");
+            repositories.clear();
+            repositories.addAll(savedrepositories);
+            repositoryAdapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE);
+        } else {
+            Log.d("save", "oi2");
+            loadPage();
+        }
     }
 
     private void loadPage() {
@@ -108,5 +121,12 @@ public class RepositoryActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("repositories", repositories);
+        outState.putInt("currentPage", currentPage);
+        super.onSaveInstanceState(outState);
     }
 }

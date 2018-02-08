@@ -4,7 +4,9 @@ package br.ufpe.cin.ehammo.githubjavapop.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Owner {
+import java.io.Serializable;
+
+public class Owner implements Serializable {
 
     @SerializedName("login")
     @Expose
