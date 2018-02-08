@@ -73,13 +73,13 @@ public class PullRequestActivity extends AppCompatActivity {
                     int open = 0;
                     int close = 0;
                     for (PullRequest pr : pullRequests) {
-                        if (pr.getState().equals("opened")) {
+                        if (pr.getState().equals("open")) {
                             open++;
                         } else {
                             close++;
                         }
                     }
-                    tv_open.setText(open + " open ");
+                    tv_open.setText(open + " opened ");
                     tv_close.setText("/ " + close + " closed ");
                     pullRequestAdapter.notifyDataSetChanged();
                 }

@@ -67,7 +67,6 @@ public class RepositoryActivity extends AppCompatActivity {
         recyclerView.addOnScrollListener(scrollListener);
 
         if (savedInstanceState != null) {
-            Log.d("save", "oi");
             ArrayList<Repository> savedrepositories = (ArrayList<Repository>) savedInstanceState.getSerializable("repositories");
             currentPage = savedInstanceState.getInt("currentPage");
             repositories.clear();
@@ -75,7 +74,6 @@ public class RepositoryActivity extends AppCompatActivity {
             repositoryAdapter.notifyDataSetChanged();
             progressBar.setVisibility(View.GONE);
         } else {
-            Log.d("save", "oi2");
             loadPage();
         }
     }
