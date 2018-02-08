@@ -1,9 +1,11 @@
 package br.ufpe.cin.ehammo.githubjavapop.views.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +42,17 @@ public class PullRequestAdapter extends RecyclerView.Adapter<PullRequestAdapter.
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final PullRequest pullRequest = pullRequests.get(i);
         viewHolder.setInfo(pullRequest);
+        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = pullRequest.getHtmlUrl();
+                if (!url.startsWith("http://") && !url.startsWith("https://"))
+                    url = "http://" + url;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                activity.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -85,7 +98,6 @@ public class PullRequestAdapter extends RecyclerView.Adapter<PullRequestAdapter.
         public void setInfo(PullRequest pullrequest) {
             title.setText(pullrequest.getTitle());
             body.setText(pullrequest.getBody());
-
             username.setText(pullrequest.getOwner().getLogin());
             fullusername.setText(pullrequest.getOwner().getName());
             Glide.with(activity).load(pullrequest.getOwner().getAvatarUrl()).asBitmap()

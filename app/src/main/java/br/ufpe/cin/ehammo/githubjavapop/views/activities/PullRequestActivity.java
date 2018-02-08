@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,9 @@ public class PullRequestActivity extends AppCompatActivity {
     private Context mContext;
     private RecyclerView recyclerView;
     private RelativeLayout progressBar;
+    private TextView tv_open;
+    private TextView tv_close;
+
 
     private ArrayList<PullRequest> pullRequests;
     private PullRequestAdapter pullRequestAdapter;
@@ -34,19 +38,20 @@ public class PullRequestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_pullrequest);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             login = (String) bundle.get("login");
             rep = (String) bundle.get("repository");
         }
-
         TAG = this.getLocalClassName();
         mContext = this;
+        tv_close = findViewById(R.id.close);
+        tv_open = findViewById(R.id.open);
         pullRequests = new ArrayList<>();
         progressBar = findViewById(R.id.progress);
 
-        recyclerView = findViewById(R.id.rvRepositories);
+        recyclerView = findViewById(R.id.rvPullRequests);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -59,7 +64,19 @@ public class PullRequestActivity extends AppCompatActivity {
             public void onResponse(Call<List<PullRequest>> call, Response<List<PullRequest>> response) {
                 if (response.isSuccessful()) {
                     progressBar.setVisibility(View.GONE);
+                    pullRequests.clear();
                     pullRequests.addAll(response.body());
+                    int open = 0;
+                    int close = 0;
+                    for (PullRequest pr : pullRequests) {
+                        if (pr.getState().equals("opened")) {
+                            open++;
+                        } else {
+                            close++;
+                        }
+                    }
+                    tv_open.setText(open + " open ");
+                    tv_close.setText("/ " + close + " closed ");
                     pullRequestAdapter.notifyDataSetChanged();
                 }
             }

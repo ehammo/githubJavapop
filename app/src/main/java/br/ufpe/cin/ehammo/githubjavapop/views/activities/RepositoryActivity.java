@@ -39,7 +39,7 @@ public class RepositoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_repository);
         TAG = this.getLocalClassName();
         mContext = this;
         repositories = new ArrayList<>();
