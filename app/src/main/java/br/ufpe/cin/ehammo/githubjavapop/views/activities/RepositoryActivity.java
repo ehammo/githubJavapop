@@ -31,7 +31,7 @@ public class RepositoryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RelativeLayout progressBar;
     private EndlessRecyclerViewScrollListener scrollListener;
-
+    private RelativeLayout noRepositories;
     private ArrayList<Repository> repositories;
     private RepositoryAdapter repositoryAdapter;
     private int currentPage = 1;
@@ -44,7 +44,7 @@ public class RepositoryActivity extends AppCompatActivity {
         mContext = this;
         repositories = new ArrayList<>();
         progressBar = findViewById(R.id.progress);
-
+        noRepositories = findViewById(R.id.noRepositories);
         recyclerView = findViewById(R.id.rvRepositories);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -52,7 +52,7 @@ public class RepositoryActivity extends AppCompatActivity {
         repositoryAdapter = new RepositoryAdapter(repositories, this);
 
         recyclerView.setAdapter(repositoryAdapter);
-
+        recyclerView.setVisibility(View.VISIBLE);
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
 
             @Override
@@ -99,6 +99,8 @@ public class RepositoryActivity extends AppCompatActivity {
                 Log.e(TAG, "fail");
                 if (!call.isCanceled()) {
                     progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    noRepositories.setVisibility(View.VISIBLE);
                 }
                 if (t != null) {
                     Log.e(TAG, t.getMessage());

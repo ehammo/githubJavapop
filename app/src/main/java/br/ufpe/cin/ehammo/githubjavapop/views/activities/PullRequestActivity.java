@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class PullRequestActivity extends AppCompatActivity {
     private Context mContext;
     private RecyclerView recyclerView;
     private RelativeLayout progressBar;
+    private RelativeLayout noPullRequests;
     private TextView tv_open;
     private TextView tv_close;
 
@@ -46,6 +49,7 @@ public class PullRequestActivity extends AppCompatActivity {
         }
         TAG = this.getLocalClassName();
         mContext = this;
+        noPullRequests = findViewById(R.id.noPullRequests);
         tv_close = findViewById(R.id.close);
         tv_open = findViewById(R.id.open);
         pullRequests = new ArrayList<>();
@@ -58,7 +62,7 @@ public class PullRequestActivity extends AppCompatActivity {
         pullRequestAdapter = new PullRequestAdapter(pullRequests, this);
 
         recyclerView.setAdapter(pullRequestAdapter);
-
+        recyclerView.setVisibility(View.VISIBLE);
         Facade.getInstance().getPullRequests(login, rep, new Callback<List<PullRequest>>() {
             @Override
             public void onResponse(Call<List<PullRequest>> call, Response<List<PullRequest>> response) {
@@ -83,7 +87,16 @@ public class PullRequestActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<PullRequest>> call, Throwable t) {
-
+                Log.e(TAG, "fail");
+                if (!call.isCanceled()) {
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    noPullRequests.setVisibility(View.VISIBLE);
+                }
+                if (t != null) {
+                    Log.e(TAG, t.getMessage());
+                    Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
