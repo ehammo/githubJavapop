@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class PullRequestActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<PullRequest>> call, Response<List<PullRequest>> response) {
                 if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
                     pullRequests.addAll(response.body());
                     pullRequestAdapter.notifyDataSetChanged();
                 }

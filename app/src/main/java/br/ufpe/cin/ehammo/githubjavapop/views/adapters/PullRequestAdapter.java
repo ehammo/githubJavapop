@@ -1,13 +1,20 @@
 package br.ufpe.cin.ehammo.githubjavapop.views.adapters;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
 
@@ -56,37 +63,39 @@ public class PullRequestAdapter extends RecyclerView.Adapter<PullRequestAdapter.
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        TextView name;
-        TextView desc;
-        TextView forks;
-        TextView stars;
+        TextView title;
+        TextView body;
         ImageView avatar;
         TextView username;
         TextView fullusername;
-        RelativeLayout layout;
+        LinearLayout layout;
 
         ViewHolder(View itemView) {
             super(itemView);
             layout = itemView.findViewById(R.id.externalLayout);
-            name = itemView.findViewById(R.id.tvName);
-            desc = itemView.findViewById(R.id.tvDesc);
-            forks = itemView.findViewById(R.id.tvForks);
-            stars = itemView.findViewById(R.id.tvStars);
+            title = itemView.findViewById(R.id.title);
+            body = itemView.findViewById(R.id.body);
             avatar = itemView.findViewById(R.id.ivAvatar);
             username = itemView.findViewById(R.id.tvUsername);
             fullusername = itemView.findViewById(R.id.tvFullUserName);
         }
 
         public void setInfo(PullRequest pullrequest) {
-//            name.setText(pullrequest.getName());
-//            desc.setText(pullrequest.getDescription());
-//            forks.setText(pullrequest.getForksCount().toString());
-//            stars.setText(pullrequest.getStargazersCount().toString());
-//            username.setText(pullrequest.getOwner().getLogin());
-//            fullusername.setText(pullrequest.getOwner().getName());
-//            avatar
+            title.setText(pullrequest.getTitle());
+            body.setText(pullrequest.getBody());
+
+            username.setText(pullrequest.getOwner().getLogin());
+            fullusername.setText(pullrequest.getOwner().getName());
+            Glide.with(activity).load(pullrequest.getOwner().getAvatarUrl()).asBitmap()
+                    .into(new SimpleTarget<Bitmap>(320, 240) {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            Drawable drawable = new BitmapDrawable(activity.getResources(), resource);
+                            avatar.setImageDrawable(drawable);
+                        }
+                    });
         }
     }
 

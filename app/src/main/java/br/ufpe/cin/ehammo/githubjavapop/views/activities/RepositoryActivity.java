@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +90,7 @@ public class RepositoryActivity extends AppCompatActivity {
                     Log.e(TAG, "response not successful");
                     Log.e(TAG, response.errorBody().toString());
                     Log.e(TAG, response.message());
-//                            Toast.makeText(mContext, response.message(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, response.message(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -97,11 +98,11 @@ public class RepositoryActivity extends AppCompatActivity {
             public void onFailure(Call<APIResponse> call, Throwable t) {
                 Log.e(TAG, "fail");
                 if (!call.isCanceled()) {
-//                    isLoading = false;
                     progressBar.setVisibility(View.GONE);
                 }
                 if (t != null) {
                     Log.e(TAG, t.getMessage());
+                    Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });

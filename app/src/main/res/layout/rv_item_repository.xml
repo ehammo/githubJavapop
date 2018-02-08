@@ -4,8 +4,7 @@
     android:id="@+id/externalLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/square_shadow"
-    android:orientation="horizontal">
+    android:background="@drawable/square_shadow">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/repInfo"
