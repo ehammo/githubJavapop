@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#1000"
-        android:gravity="center_horizontal"
         android:padding="20dp">
 
         <TextView
@@ -26,7 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/open"
-            android:text="/ - closed" />
+            android:text="/ - closed"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

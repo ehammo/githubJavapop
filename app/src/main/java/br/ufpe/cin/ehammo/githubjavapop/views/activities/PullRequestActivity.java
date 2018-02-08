@@ -79,8 +79,8 @@ public class PullRequestActivity extends AppCompatActivity {
                             close++;
                         }
                     }
-                    tv_open.setText(open + " opened ");
-                    tv_close.setText("/ " + close + " closed ");
+                    tv_open.setText(String.format("%s %s ", String.valueOf(open), getString(R.string.open)));
+                    tv_close.setText(String.format("/ %s %s", String.valueOf(close), getString(R.string.close)));
                     pullRequestAdapter.notifyDataSetChanged();
                 }
             }
