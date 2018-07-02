@@ -77,7 +77,6 @@ public class PullRequestAdapter extends RecyclerView.Adapter<PullRequestAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         TextView title;
         TextView body;
         ImageView avatar;

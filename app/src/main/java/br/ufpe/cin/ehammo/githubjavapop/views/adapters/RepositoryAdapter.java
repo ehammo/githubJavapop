@@ -75,7 +75,6 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         TextView name;
         TextView desc;
         TextView forks;

@@ -27,15 +27,15 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'org.glassfish:javax.annotation:10.0-b28'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'org.glassfish:javax.annotation:10.0-b28'
 
-    compile 'com.android.support:recyclerview-v7:27.0.2'
-    compile 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.android.support:recyclerview-v7:27.0.2'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'design'
